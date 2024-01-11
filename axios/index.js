@@ -14,58 +14,58 @@ const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 const API_KEY = "live_yniLb0KBHznK0cEYYCMm6MXVIgNBDN7KmWS5iMo7Jlm7ng3okdzm88OZ4txXxyqV";
 
 async function initialLoad() {
-  const breedSelect = document.getElementById('breedSelect');
+    const breedSelect = document.getElementById('breedSelect');
 
-  try {
-    const response = await fetch('https://api.thecatapi.com/v1/breeds');
-    const breeds = await response.json();
-    breeds.forEach(breed => {
-      const option = document.createElement('option');
-      option.value = breed.id;
-      option.textContent = breed.name;
-      breedSelect.appendChild(option);
-    });
+    try {
+        const response = await fetch('https://api.thecatapi.com/v1/breeds');
+        const breeds = await response.json();
+        breeds.forEach(breed => {
+            const option = document.createElement('option');
+            option.value = breed.id;
+            option.textContent = breed.name;
+            breedSelect.appendChild(option);
+        });
 
-    breedSelect.addEventListener('change', handleBreedSelectChange);
-    breedSelect.dispatchEvent(new Event('change'));
-  } catch (error) {
-    console.error('Error fetching cat breeds:', error);
-  }
+        breedSelect.addEventListener('change', handleBreedSelectChange);
+        breedSelect.dispatchEvent(new Event('change'));
+    } catch (error) {
+        console.error('Error fetching cat breeds:', error);
+    }
 }
 
 async function handleBreedSelectChange() {
-  const selectedBreedId = document.getElementById('breedSelect').value;
-  const carousel = document.getElementById('carousel');
-  const infoDump = document.getElementById('infoDump');
+    const selectedBreedId = document.getElementById('breedSelect').value;
+    const carousel = document.getElementById('carousel');
+    const infoDump = document.getElementById('infoDump');
 
-  carousel.innerHTML = '';
-  infoDump.innerHTML = '';
+    carousel.innerHTML = '';
+    infoDump.innerHTML = '';
 
-  try {
+    try {
 
-    const response = await fetch(`https://api.thecatapi.com/v1/images/search?breed_id=${selectedBreedId}&limit=3`);
-    const breedImages = await response.json();
+        const response = await fetch(`https://api.thecatapi.com/v1/images/search?breed_id=${selectedBreedId}&limit=3`);
+        const breedImages = await response.json();
 
-    breedImages.forEach(image => {
-      const imgElement = document.createElement('img');
-      imgElement.src = image.url;
-      carousel.appendChild(imgElement);
-    });
+        breedImages.forEach(image => {
+            const imgElement = document.createElement('img');
+            imgElement.src = image.url;
+            carousel.appendChild(imgElement);
+        });
 
-    const selectedBreedInfo = await fetch(`https://api.thecatapi.com/v1/breeds/${selectedBreedId}`);
-    const breedInfo = await selectedBreedInfo.json();
+        const selectedBreedInfo = await fetch(`https://api.thecatapi.com/v1/breeds/${selectedBreedId}`);
+        const breedInfo = await selectedBreedInfo.json();
 
-    const infoSection = document.createElement('div');
-    infoSection.innerHTML = `
-      <h2>${breedInfo.name}</h2>
-      <p><strong>Description:</strong> ${breedInfo.description}</p>
-      <p><strong>Temperament:</strong> ${breedInfo.temperament}</p>
-      <p><strong>Origin:</strong> ${breedInfo.origin}</p>
+        const infoSection = document.createElement('div');
+        infoSection.innerHTML = `
+    <h2>${breedInfo.name}</h2>
+    <p><strong>Description:</strong> ${breedInfo.description}</p>
+    <p><strong>Temperament:</strong> ${breedInfo.temperament}</p>
+    <p><strong>Origin:</strong> ${breedInfo.origin}</p>
     `;
-    infoDump.appendChild(infoSection);
-  } catch (error) {
-    console.error('Error fetching breed information:', error);
-  }
+        infoDump.appendChild(infoSection);
+    } catch (error) {
+        console.error('Error fetching breed information:', error);
+    }
 }
 
 initialLoad();
@@ -146,7 +146,7 @@ initialLoad();
  * - You can call this function by clicking on the heart at the top right of any image.
  */
 export async function favourite(imgId) {
-  // your code here
+    // your code here
 }
 
 /**
