@@ -11,14 +11,18 @@ const progressBar = document.getElementById("progressBar");
 const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 
 // Step 0: Store your API key here for reference and easy access.
+// Make sure Axios is available in your project
+
 const API_KEY = "live_yniLb0KBHznK0cEYYCMm6MXVIgNBDN7KmWS5iMo7Jlm7ng3okdzm88OZ4txXxyqV";
+
+axios.defaults.headers.common['x-api-key'] = API_KEY;
 
 async function initialLoad() {
     const breedSelect = document.getElementById('breedSelect');
 
     try {
-        const response = await fetch('https://api.thecatapi.com/v1/breeds');
-        const breeds = await response.json();
+        const response = await axios.get('https://api.thecatapi.com/v1/breeds');
+        const breeds = response.data;
         breeds.forEach(breed => {
             const option = document.createElement('option');
             option.value = breed.id;
@@ -42,9 +46,8 @@ async function handleBreedSelectChange() {
     infoDump.innerHTML = '';
 
     try {
-
-        const response = await fetch(`https://api.thecatapi.com/v1/images/search?breed_id=${selectedBreedId}&limit=3`);
-        const breedImages = await response.json();
+        const response = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_id=${selectedBreedId}&limit=3`);
+        const breedImages = response.data;
 
         breedImages.forEach(image => {
             const imgElement = document.createElement('img');
@@ -52,8 +55,8 @@ async function handleBreedSelectChange() {
             carousel.appendChild(imgElement);
         });
 
-        const selectedBreedInfo = await fetch(`https://api.thecatapi.com/v1/breeds/${selectedBreedId}`);
-        const breedInfo = await selectedBreedInfo.json();
+        const selectedBreedInfo = await axios.get(`https://api.thecatapi.com/v1/breeds/${selectedBreedId}`);
+        const breedInfo = selectedBreedInfo.data;
 
         const infoSection = document.createElement('div');
         infoSection.innerHTML = `
